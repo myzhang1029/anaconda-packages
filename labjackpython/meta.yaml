@@ -1,0 +1,45 @@
+{% set name = "labjackpython" %}
+{% set version = "2.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/LabJackPython-{{ version }}.tar.gz
+  sha256: c4fb8fe1ce161949cb2bb70e5fe8e99549121b065c45c8511293f6ff8037a160
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  imports:
+    - LabJackPython
+    - Modbus
+    - u12
+    - u3
+    - u6
+    - ue9
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://labjack.com/support/software/examples/ud/labjackpython
+  summary: The LabJack Python modules for the LabJack U3, U6, UE9 and U12.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

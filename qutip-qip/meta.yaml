@@ -1,0 +1,47 @@
+{% set name = "qutip-qip" %}
+{% set version = "0.3.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_rev: v{{ version }}
+  git_url: https://github.com/qutip/qutip-qip
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - setuptools >=42
+    - packaging
+    - wheel
+    - pip
+  run:
+    - python
+    - numpy >=1.16.6
+    - scipy >=1.0
+    - qutip >=4.6
+    - packaging
+
+test:
+  imports:
+    - qutip_qip
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/qutip/qutip-qip
+  summary: The QuTiP quantum information processing package
+  license: BSD-3-Clause
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029
