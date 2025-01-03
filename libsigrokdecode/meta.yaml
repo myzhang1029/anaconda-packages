@@ -1,0 +1,45 @@
+{% set name = "libsigrokdecode" %}
+{% set version = "0.5.3" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_rev: {{ name }}-{{ version }}
+  git_url: https://github.com/sigrokproject/libsigrokdecode.git
+
+build:
+  number: 0
+
+requirements:
+  build:
+    - autoconf >=2.63
+    - automake >=1.11
+    - libtool
+    - pkg-config >=0.22
+    - python >=3.2
+    - make
+    - {{ compiler('c') }}
+    - glib >=2.34.0
+  host:
+    - python >=3.2
+    - glib >=2.34.0
+  run:
+    - python >=3.2
+
+test:
+  commands:
+    - test -f "$PREFIX/include/libsigrokdecode/libsigrokdecode.h"
+    - test -f "$PREFIX/include/libsigrokdecode/version.h"
+    - test -f "$PREFIX/lib/libsigrokdecode.la"
+
+about:
+  home: https://github.com/sigrokproject/libsigrokdecode
+  summary: A shared library written in C which provides the basic API for running sigrok protocol decoders.
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

@@ -1,0 +1,44 @@
+{% set name = "py-vapid" %}
+{% set version = "1.9.2" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/py_vapid-{{ version }}.tar.gz
+  sha256: 3c8973b6cf8384ad0c9ae64d6270ccc480e0b92c702d8f5ea2cc03e6b51247f9
+
+build:
+  entry_points:
+    - vapid = py_vapid.main:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - setuptools
+    - pip
+  run:
+    - python
+    - cryptography >=2.5
+
+test:
+  imports:
+    - py_vapid
+  commands:
+    - pip check
+    - vapid --help
+  requires:
+    - pip
+
+about:
+  summary: Simple VAPID header generation library
+  license: MPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

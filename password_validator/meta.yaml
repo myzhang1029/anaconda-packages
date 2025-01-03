@@ -1,0 +1,39 @@
+{% set name = "password_validator" %}
+{% set version = "1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/password_validator-{{ version }}.tar.gz
+  sha256: f12c1036b17c67fab607ad8003f43e73940793d7ab89bc7efcb2cd47c024533b
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+
+test:
+  imports:
+    - password_validator
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/tarunbatra/password-validator-python
+  summary: Validates password according to flexible and intuitive specifications
+  license: MIT
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

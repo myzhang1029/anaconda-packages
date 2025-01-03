@@ -1,0 +1,43 @@
+{% set name = "gnuradio-scopy" %}
+{% set version = "1.0.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_rev: a69ccb22578621a69acc187fc0d006b5a030a744
+  git_url: https://github.com/analogdevicesinc/gr-scopy.git
+
+build:
+  script: |
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="$PREFIX"
+    cmake --build build
+    cmake --install build
+  number: 0
+
+requirements:
+  build:
+    - bison >=3.0.2
+    - cmake
+    - make
+    - gnuradio >=3.10
+    - {{ compiler('c') }}
+  host:
+    - gnuradio >=3.10
+  run:
+    - gnuradio >=3.10
+
+test:
+  commands:
+    - test -f "$PREFIX/include/gnuradio/scopy/api.h"
+
+about:
+  home: https://github.com/analogdevicesinc/gr-scopy
+  summary: Scopy IIO blocks for GNU Radio
+  license: GPL-3.0-or-later
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

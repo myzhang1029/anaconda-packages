@@ -1,0 +1,49 @@
+{% set name = "pywebpush" %}
+{% set version = "2.0.3" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pywebpush-{{ version }}.tar.gz
+  sha256: 584878e3c243e873a22db8895505d95715bc796ef74cc1b8fe99f596174161e3
+
+build:
+  entry_points:
+    - pywebpush = pywebpush.__main__:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - setuptools
+    - pip
+  run:
+    - python
+    - aiohttp
+    - cryptography >=2.6.1
+    - http-ece >=1.1.0
+    - requests >=2.21.0
+    - six >=1.15.0
+    - py-vapid >=1.7.0
+
+test:
+  imports:
+    - pywebpush
+  commands:
+    - pip check
+    - pywebpush --help
+  requires:
+    - pip
+
+about:
+  summary: WebPush publication library
+  license: MPL-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

@@ -1,0 +1,43 @@
+{% set name = "redis" %}
+{% set version = "5.0.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/redis-{{ version }}.tar.gz
+  sha256: ec31f2ed9675cc54c21ba854cfe0462e6faf1d83c8ce5944709db8a4700b9c61
+
+build:
+  skip: true  # [py<37]
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - python
+    - importlib-metadata >=1.0  # [py<38]
+    - typing_extensions  # [py<38]
+    - async-timeout >=4.0.3
+
+test:
+  imports:
+    - redis
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/redis/redis-py
+  summary: Python client for Redis database and key-value store
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

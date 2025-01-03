@@ -1,0 +1,43 @@
+{% set name = "gspread" %}
+{% set version = "6.1.4" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/gspread-{{ version }}.tar.gz
+  sha256: b8eec27de7cadb338bb1b9f14a9be168372dee8965c0da32121816b5050ac1de
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.8
+    - flit-core >=3.2,<4
+    - pip
+  run:
+    - python >=3.8
+    - google-auth >=1.12.0
+    - google-auth-oauthlib >=0.4.1
+
+test:
+  imports:
+    - gspread
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: Google Spreadsheets Python API
+  dev_url: https://github.com/burnash/gspread
+  license: MIT
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

@@ -1,0 +1,47 @@
+{% set name = "deepl" %}
+{% set version = "1.20.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/deepl-{{ version }}.tar.gz
+  sha256: 2eae46d8f0279b00bce4686ec018bb5757a0ad0cc036616ef00ad12f9758955b
+
+build:
+  entry_points:
+    - deepl = deepl.__main__:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.6,<4.0
+    - poetry-core >=1.0.0
+    - pip
+  run:
+    - python >=3.6,<4.0
+    - requests >=2.0.0,<3.0.0
+  run_constrained:
+    - keyring >=23.4.1,<24.0.0
+
+test:
+  imports:
+    - deepl
+  commands:
+    - pip check
+    - deepl --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/DeepLcom/deepl-python
+  summary: Python library for the DeepL API.
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

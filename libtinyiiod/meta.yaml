@@ -1,0 +1,38 @@
+{% set name = "libtinyiiod" %}
+{% set version = "0.1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  git_rev: v{{ version }}
+  git_url: https://github.com/analogdevicesinc/libtinyiiod.git
+
+build:
+  script: |
+    cmake -S . -B build -DCMAKE_INSTALL_PREFIX="$PREFIX"
+    cmake --build build
+    cmake --install build
+  number: 0
+
+requirements:
+  build:
+    - cmake
+    - make
+    - {{ compiler('c') }}
+
+test:
+  commands:
+    - test -f "$PREFIX/include/tinyiiod/tinyiiod.h"
+    - test -f "$PREFIX/include/tinyiiod/tinyiiod.h"
+
+about:
+  home: https://github.com/analogdevicesinc/libtinyiiod
+  summary: Tiny IIO Daemon Library
+  license: LGPL-2.1-or-later
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029
