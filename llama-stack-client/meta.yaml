@@ -1,0 +1,58 @@
+{% set name = "llama-stack-client" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/llama_stack_client-{{ version }}.tar.gz
+  sha256: a8092626b915ee03faa8ff7ec6678eb448594a8bfb45713b92e3a0cf5cf26c61
+
+build:
+  skip: true  # [py<37]
+  entry_points:
+    - llama-stack-client = llama_stack_client.lib.cli.llama_stack_client:main
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.7
+    - hatchling
+    - hatch-fancy-pypi-readme
+    - pip
+  run:
+    - python >=3.7
+    - httpx >=0.23.0,<1
+    - pydantic >=1.9.0,<3
+    - typing_extensions >=4.7,<5
+    - anyio >=3.5.0,<5
+    - distro >=1.7.0,<2
+    - sniffio
+    - cached-property  # [py<38]
+    - tqdm
+    - rich
+    - click
+    - pyaml
+    - prompt-toolkit
+    - pandas
+    - termcolor
+
+test:
+  imports:
+    - llama_stack_client
+  commands:
+    - pip check
+    - llama-stack-client --help
+  requires:
+    - pip
+
+about:
+  summary: The official Python library for the llama-stack-client API
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029

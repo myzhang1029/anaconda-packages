@@ -1,0 +1,59 @@
+{% set name = "llama-stack" %}
+{% set version = "0.1.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/llama_stack-{{ version }}.tar.gz
+  sha256: 7b254b285ad5977c120bcc77778ccf5ce58120ba70edcbb2cf55b4675d4f31f0
+
+build:
+  entry_points:
+    - llama = llama_stack.cli.llama:main
+    - install-wheel-from-presigned = llama_stack.cli.scripts.run:install_wheel_from_presigned
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.10
+    - setuptools >=61.0
+    - pip
+  run:
+    - python >=3.10
+    - blobfile
+    - fire
+    - httpx
+    - huggingface_hub
+    - llama-models >=0.1.0
+    - llama-stack-client >=0.1.0
+    - prompt-toolkit
+    - python-dotenv
+    - pydantic >=2
+    - requests
+    - rich
+    - setuptools
+    - termcolor
+
+test:
+  imports:
+    - llama_stack
+  commands:
+    - pip check
+    - llama --help
+    #- install-wheel-from-presigned --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/meta-llama/llama-stack
+  summary: Llama Stack
+  license: MIT
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029
