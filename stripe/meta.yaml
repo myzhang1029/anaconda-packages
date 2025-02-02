@@ -1,5 +1,5 @@
 {% set name = "stripe" %}
-{% set version = "9.8.0" %}
+{% set version = "11.5.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/stripe-{{ version }}.tar.gz
-  sha256: 63161fca746cb6a81e2158bf61950ccb8d75f1b7231c7f4ac9e05817aab586b4
+  sha256: bc3e0358ffc23d5ecfa8aafec1fa4f048ee8107c3237bcb00003e68c8c96fa02
 
 build:
   skip: true  # [py2k]
@@ -21,8 +21,8 @@ requirements:
     - pip
   run:
     - python
-    - typing_extensions <=4.2.0,>3.7.2 # [py<37]
-    - typing_extensions >=4.5.0 # [py>=37]
+    - typing_extensions <=4.2.0,>3.7.2  # [py<37]
+    - typing_extensions >=4.5.0  # [py>=37]
     - requests >=2.20  # [py>=30]
 
 test:

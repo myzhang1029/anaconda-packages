@@ -1,5 +1,5 @@
 {% set name = "galois" %}
-{% set version = "0.4.2" %}
+{% set version = "0.4.4" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/galois-{{ version }}.tar.gz
-  sha256: bffdd595a29eefe7234075e508e685e328297b56b0279efa1d83dce2a68d92a7
+  sha256: cab4f933981ea9a51f155ea2062724b42373d6c408a00b2ac272e1b00529c0a3
 
 build:
   noarch: python
@@ -23,8 +23,8 @@ requirements:
     - pip
   run:
     - python >=3.7
-    - numpy >=1.21.0,<2.2
-    - numba >=0.55,<0.61
+    - numpy >=1.21.0
+    - numba >=0.55,<0.62
     - typing_extensions >=4.0.0
 
 test:

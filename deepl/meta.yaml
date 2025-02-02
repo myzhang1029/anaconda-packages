@@ -1,5 +1,5 @@
 {% set name = "deepl" %}
-{% set version = "1.20.0" %}
+{% set version = "1.21.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/deepl-{{ version }}.tar.gz
-  sha256: 2eae46d8f0279b00bce4686ec018bb5757a0ad0cc036616ef00ad12f9758955b
+  sha256: fae768ba0cafbfcc7de3fcec58e2eafd45d0c917df9385f9bde2126968c35a9e
 
 build:
   entry_points:
@@ -19,13 +19,13 @@ build:
 requirements:
   host:
     - python >=3.6,<4.0
-    - poetry-core >=1.0.0
+    - poetry-core
     - pip
   run:
     - python >=3.6,<4.0
     - requests >=2.0.0,<3.0.0
   run_constrained:
-    - keyring >=23.4.1,<24.0.0
+    - keyring >=23.4.1,<24.0.0  # [py>=36 and py<4]
 
 test:
   imports:
