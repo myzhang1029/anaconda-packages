@@ -1,0 +1,43 @@
+{% set name = "asyncmy" %}
+{% set version = "0.2.10" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/asyncmy-{{ version }}.tar.gz
+  sha256: f4b67edadf7caa56bdaf1c2e6cf451150c0a86f5353744deabe4426fe27aff4e
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.8,<4.0
+    - poetry-core
+    - setuptools
+    - cython
+    - pip
+  run:
+    - python >=3.8.0,<4.0
+
+test:
+  imports:
+    - asyncmy
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  home: https://github.com/long2ice/asyncmy
+  summary: A fast asyncio MySQL driver
+  license: Apache-2.0
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - myzhang1029
