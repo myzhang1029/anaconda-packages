@@ -18,6 +18,7 @@ requirements:
   host:
     - python
     - pip
+    - setuptools
   run:
     - python
     - importlib-metadata >=1.0  # [py<38]
