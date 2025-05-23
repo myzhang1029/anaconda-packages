@@ -1,0 +1,56 @@
+{% set name = "pyspice" %}
+{% set version = "1.5" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/PySpice-{{ version }}.tar.gz
+  sha256: d28448accad98959e0f5932af8736e90a1f3f9ff965121c6881d24cdfca23d22
+
+build:
+  entry_points:
+    - cir2py = PySpice.Scripts.cir2py:main
+    - pyspice-post-installation = PySpice.Scripts.pyspice_post_installation:main
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.6
+    - pip
+    - setuptools
+  run:
+    - python >=3.6
+    - pyyaml >=5.3
+    - cffi >=1.14
+    - matplotlib-base >=3.2
+    - numpy >=1.18
+    - ply >=3.11
+    - scipy >=1.4
+    - requests >=2.23
+    - ngspice <=34
+    - invoke
+
+test:
+  imports:
+    - PySpice
+    - tasks
+  commands:
+    - pip check
+    - cir2py --help
+    - pyspice-post-installation --help
+  requires:
+    - pip
+
+about:
+  home: https://github.com/FabriceSalvaire/PySpice
+  summary: Simulate electronic circuit using Python and the Ngspice / Xyce simulators
+  license: GPL-3.0-only
+  license_file: LICENSE.txt
+
+extra:
+  recipe-maintainers:
+    - myzhang1029
